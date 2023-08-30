@@ -1,0 +1,67 @@
+### GET TODOS LOS PRODUCTOS
+GET http://localhost:8080/api/products/?limit=10&page=1&sort=asc&query=0
+### GET PRODUCTO POR ID
+GET http://localhost:8080/api/products/64dba2273ede751a4a2f40bf
+### POST Crear producto nuevo
+POST http://localhost:8080/api/products/
+Content-Type: application/json
+
+{
+    "title":"Bananas2",
+    "description":"bananas",
+    "code":2,
+    "price": 2,
+    "category": "Frutas"
+}
+
+
+###ACTUALIZAR PRODUCTO
+PUT http://localhost:8080/api/products/64dba2273ede751a4a2f40bf
+Content-Type: application/json
+
+{   
+    "code": 58,
+    "description":"pera",
+    "price": 20
+}
+
+###ELIMINAR PRODUCTO 
+DELETE  http://localhost:8080/api/products/64dbfe7781dcc193f0a75fba
+
+
+
+### OBTENER TODOS LOS CARTS
+
+GET http://localhost:8080/api/carts
+
+### OBTENER CART POR ID
+GET http://localhost:8080/api/carts/64dbf4ebae63069bd64c31b6
+
+###CREAR CARRITO NUEVO
+POST  http://localhost:8080/api/carts/
+
+### AGREGAR PRODUCTO A UN CARRITO 1
+POST  http://localhost:8080/api/carts/64dbf4ebae63069bd64c31b6/product/64cec99c40248cd940be2315
+
+### AGREGAR PRODUCTO A UN CARRITO 2
+POST  http://localhost:8080/api/carts/64dbf4ebae63069bd64c31b6/product/64db83b161d9839865db6b10
+
+###  ELIMINAR CART POR ID
+DELETE  http://localhost:8080/api/carts/64dbeedd225e2f7f52f624fe
+
+### ELIMINAR TODOS LOS PRODUCTOS DE UN CART
+DELETE  http://localhost:8080/api/carts/64dbeedd225e2f7f52f624fe/products
+
+###  ELIMINAR UN PRODUCTO DE UN CART
+DELETE  http://localhost:8080/api/carts/64dbf4ebae63069bd64c31b6/products/64cec99c40248cd940be2315
+
+### ACTUALIZAR CANTIDAD DE EJEMPLARES DE UN PRODUCTO
+PUT  http://localhost:8080/api/carts/64dbf4ebae63069bd64c31b6/products/64cec99c40248cd940be2315
+Content-Type: application/json
+
+{
+    "quantity": 4
+}
+
+### ACTUALIZAR CANTIDAD DE EJEMPLARES DE UN PRODUCTO
+PUT  http://localhost:8080/api/carts/db/64dbde4c4334e73055cf5

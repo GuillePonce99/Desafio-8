@@ -1,0 +1,306 @@
+[
+    {
+        "title": "Manzana",
+        "description": "Una fruta deliciosa y saludable",
+        "code": "F001",
+        "price": 1500,
+        "stock": 50,
+        "category": "Frutas"
+    },
+    {
+        "title": "Brócoli",
+        "description": "Una verdura rica en nutrientes",
+        "code": "V002",
+        "price": 800,
+        "stock": 30,
+        "category": "Verduras"
+    },
+    {
+        "title": "Pizza",
+        "description": "Una deliciosa pizza con varios ingredientes",
+        "code": "P003",
+        "price": 1200,
+        "stock": 20,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Plátano",
+        "description": "Una fruta energética",
+        "code": "F004",
+        "price": 1200,
+        "stock": 70,
+        "category": "Frutas"
+    },
+    {
+        "title": "Zanahoria",
+        "description": "Una verdura buena para la vista",
+        "code": "V005",
+        "price": 600,
+        "stock": 40,
+        "category": "Verduras"
+    },
+    {
+        "title": "Ensalada César",
+        "description": "Una fresca ensalada con pollo y aderezo",
+        "code": "E006",
+        "price": 950,
+        "stock": 25,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Naranja",
+        "description": "Una fruta llena de vitamina C",
+        "code": "F007",
+        "price": 1300,
+        "stock": 60,
+        "category": "Frutas"
+    },
+    {
+        "title": "Tomate",
+        "description": "Un ingrediente esencial en muchas recetas",
+        "code": "V008",
+        "price": 500,
+        "stock": 45,
+        "category": "Verduras"
+    },
+    {
+        "title": "Hamburguesa",
+        "description": "Una hamburguesa jugosa con todos los acompañamientos",
+        "code": "H009",
+        "price": 1000,
+        "stock": 15,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Pera",
+        "description": "Una fruta jugosa y refrescante",
+        "code": "F010",
+        "price": 1100,
+        "stock": 35,
+        "category": "Frutas"
+    },
+    {
+        "title": "Espinaca",
+        "description": "Una verdura llena de nutrientes",
+        "code": "V011",
+        "price": 700,
+        "stock": 30,
+        "category": "Verduras"
+    },
+    {
+        "title": "Sushi",
+        "description": "Rolls de sushi frescos y deliciosos",
+        "code": "S012",
+        "price": 1800,
+        "stock": 10,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Kiwi",
+        "description": "Una fruta exótica llena de vitamina C",
+        "code": "F013",
+        "price": 1600,
+        "stock": 20,
+        "category": "Frutas"
+    },
+    {
+        "title": "Calabacín",
+        "description": "Una verdura versátil para cocinar",
+        "code": "V014",
+        "price": 750,
+        "stock": 28,
+        "category": "Verduras"
+    },
+    {
+        "title": "Tacos",
+        "description": "Tacos tradicionales con diferentes guarniciones",
+        "code": "T015",
+        "price": 1200,
+        "stock": 40,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Mango",
+        "description": "Una fruta tropical y jugosa",
+        "code": "F016",
+        "price": 2000,
+        "stock": 40,
+        "category": "Frutas"
+    },
+    {
+        "title": "Papas Fritas",
+        "description": "Papas crujientes y doradas",
+        "code": "P017",
+        "price": 600,
+        "stock": 60,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Sandía",
+        "description": "Una fruta refrescante para el verano",
+        "code": "F018",
+        "price": 900,
+        "stock": 22,
+        "category": "Frutas"
+    },
+    {
+        "title": "Espárragos",
+        "description": "Una verdura delicada y deliciosa",
+        "code": "V019",
+        "price": 1250,
+        "stock": 18,
+        "category": "Verduras"
+    },
+    {
+        "title": "Lasagna",
+        "description": "Un plato de pasta horneada con capas de sabores",
+        "code": "L020",
+        "price": 1500,
+        "stock": 25,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Cereza",
+        "description": "Una fruta pequeña y dulce",
+        "code": "F021",
+        "price": 1800,
+        "stock": 15,
+        "category": "Frutas"
+    },
+    {
+        "title": "Pimiento",
+        "description": "Una verdura colorida para guisos",
+        "code": "V022",
+        "price": 650,
+        "stock": 50,
+        "category": "Verduras"
+    },
+    {
+        "title": "Hot Dog",
+        "description": "Un clásico hot dog con todas las coberturas",
+        "code": "H023",
+        "price": 800,
+        "stock": 30,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Fresa",
+        "description": "Una fruta dulce y sabrosa",
+        "code": "F024",
+        "price": 1400,
+        "stock": 35,
+        "category": "Frutas"
+    },
+    {
+        "title": "Espinaca",
+        "description": "Una verdura llena de nutrientes",
+        "code": "V025",
+        "price": 700,
+        "stock": 30,
+        "category": "Verduras"
+    },
+    {
+        "title": "Sopa de Tomate",
+        "description": "Una reconfortante sopa de tomate",
+        "code": "S026",
+        "price": 500,
+        "stock": 20,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Uva",
+        "description": "Una fruta para aperitivos y postres",
+        "code": "F027",
+        "price": 1600,
+        "stock": 25,
+        "category": "Frutas"
+    },
+    {
+        "title": "Pasta Alfredo",
+        "description": "Pasta cremosa con salsa Alfredo",
+        "code": "P029",
+        "price": 1100,
+        "stock": 18,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Ciruela",
+        "description": "Una fruta dulce para postres",
+        "code": "F030",
+        "price": 1300,
+        "stock": 20,
+        "category": "Frutas"
+    },
+    {
+        "title": "Burrito",
+        "description": "Burrito relleno de ingredientes sabrosos",
+        "code": "B032",
+        "price": 1200,
+        "stock": 22,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Papaya",
+        "description": "Una fruta tropical y jugosa",
+        "code": "F033",
+        "price": 1800,
+        "stock": 28,
+        "category": "Frutas"
+    },
+    {
+        "title": "Pollo a la Parrilla",
+        "description": "Pollo jugoso y sabroso a la parrilla",
+        "code": "P035",
+        "price": 1500,
+        "stock": 15,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Taco Ensalada",
+        "description": "Una ensalada en una tortilla de taco",
+        "code": "T038",
+        "price": 1100,
+        "stock": 25,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Coco",
+        "description": "Una fruta tropical para disfrutar",
+        "code": "F039",
+        "price": 1200,
+        "stock": 18,
+        "category": "Frutas"
+    },
+    {
+        "title": "Pasta Primavera",
+        "description": "Pasta con vegetales frescos y salsa ligera",
+        "code": "P041",
+        "price": 1000,
+        "stock": 20,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Pitahaya",
+        "description": "Una fruta exótica y llamativa",
+        "code": "F042",
+        "price": 2200,
+        "stock": 15,
+        "category": "Frutas"
+    },
+    {
+        "title": "Sándwich BLT",
+        "description": "Sándwich clásico de tocino, lechuga y tomate",
+        "code": "S044",
+        "price": 850,
+        "stock": 25,
+        "category": "Otras Comidas"
+    },
+    {
+        "title": "Frutilla",
+        "description": "Una fruta pequeña y dulce",
+        "code": "F045",
+        "price": 1800,
+        "stock": 20,
+        "category": "Frutas"
+    }
+]
