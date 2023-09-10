@@ -24,7 +24,22 @@ const userSchema = new Schema({
     password: {
         type: String,
         require: true
+    },
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: "carts"
+    },
+    role: {
+        type: String,
+        default: "user"
     }
+})
+
+userSchema.pre("findOne", function () {
+    this.populate('cart')
+})
+userSchema.pre("findById", function () {
+    this.populate('cart')
 })
 
 const UserModel = mongoose.model(collection, userSchema)

@@ -1,18 +1,32 @@
 import passport from "passport";
 import local from "passport-local"
+import jwt from "passport-jwt"
 import GitHubStrategy from "passport-github2"
 import UserModel from "../dao/models/users.model.js";
-import { createHash, isValidPassword } from "../utils.js";
+import { PRIVATE_KEY } from "../utils.js";
 import * as dotenv from "dotenv"
 
 dotenv.config()
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET
 const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL
+
 const LocalStrategy = local.Strategy
+const JWTStrategy = jwt.Strategy
+const ExtractJWT = jwt.ExtractJwt
+
+const cookieExtractor = req => {
+    let token = null;
+    if (req && req.cookies) {
+        token = req.cookies["coderCookieToken"]
+        return token
+    } else {
+        return token
+    }
+}
 
 const initializePassport = () => {
-
+    /*
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })
@@ -29,7 +43,18 @@ const initializePassport = () => {
             done(null, user)
         }
     })
+    */
 
+    passport.use("jwt", new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: PRIVATE_KEY
+    }, async (jwt_payload, done) => {
+        try {
+            return done(null, jwt_payload)
+        } catch (error) {
+            return done(error)
+        }
+    }))
 
     passport.use("github", new GitHubStrategy({
         clientID: GITHUB_CLIENT_ID,
@@ -51,6 +76,7 @@ const initializePassport = () => {
                 }
 
                 let result = await UserModel.create(newUser)
+
                 return done(null, result)
             } else {
                 done(null, user)
@@ -59,75 +85,5 @@ const initializePassport = () => {
             return done(error)
         }
     }))
-
-    passport.use("signup", new LocalStrategy({
-        passReqToCallback: true,
-        usernameField: "email"
-    },
-        async (req, username, password, done) => {
-            const { firstName, lastName, age, email } = req.body
-            try {
-
-                const repetedEmail = await UserModel.findOne({ "email": username })
-
-                if (repetedEmail) {
-                    return done(null, false, { message: "El email ingresado ya existe!" })
-                }
-
-                if (age <= 0 || age >= 100) {
-                    return done(null, false, { message: "Ingrese una edad correcta!" })
-                }
-
-                const user = {
-                    firstName,
-                    lastName,
-                    age,
-                    email,
-                    password: createHash(password)
-                }
-
-                const result = await UserModel.create(user)
-
-                return done(null, result)
-            } catch (error) {
-                return done(error)
-            }
-        }
-    ))
-
-    passport.use("login", new LocalStrategy({
-        usernameField: "email"
-    },
-        async (username, password, done) => {
-
-            try {
-                if (username === "adminCoder@coder.com" && password === "adminCod3r123") {
-
-                    const admin = {
-                        _id: "admin",
-                        email: username
-                    }
-
-                    return done(null, admin)
-                } else {
-
-                    const user = await UserModel.findOne({ email: username })
-
-                    if (user === null) {
-
-                        return done(null, false)
-                    } else if (!isValidPassword(password, user)) {
-                        return done(null, false)
-                    } else {
-                        return done(null, user)
-                    }
-                }
-
-            } catch (error) {
-                return done(error)
-            }
-        }
-    ))
-
 }
 export default initializePassport

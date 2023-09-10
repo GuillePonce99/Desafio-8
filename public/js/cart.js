@@ -6,11 +6,23 @@ const btnDelete = document.querySelectorAll("#btn-delete")
 const totalElem = document.getElementById("total-cart")
 const btnVolver = document.getElementById("btnVolver")
 
-const updateTotal = () => {
-    const cart = JSON.parse(localStorage.cart)
-    const products = cart.products
+const getCartId = async () => {
+
+    const response = await fetch("/api/carts/user/cart")
+
+    if (response.ok) {
+        const data = await response.json()
+        return data
+    } else {
+        return false
+    }
+}
+
+const updateTotal = async () => {
+    const data = await getCartId()
+    const cart = data.carrito
     const price = []
-    products.map((product) => {
+    cart.products.map((product) => {
         price.push(product.product.price * product.quantity)
     })
     let total = price.reduce((acc, currentValue) => acc + currentValue, 0);
@@ -19,46 +31,20 @@ const updateTotal = () => {
 
 updateTotal()
 
-
-const updateQuantity = (id, quantity) => {
-    const cart = JSON.parse(localStorage.cart)
-    const products = cart.products
-    const product = products.find((e) => e.product._id === id)
-
-    product.quantity = quantity
-
-    localStorage.setItem("cart", JSON.stringify(cart))
-
-}
-
 const updateQuantityDom = (id, n) => {
 
     const boton = Array.from(quantityElem).find((e) => (e.dataset.id) === id)
-
-    console.log(boton);
-
     let element = ""
     element += `<p>${n}<p>`
     boton.innerHTML = element
 }
 
-const getQuantity = (id) => {
-    const cart = JSON.parse(localStorage.cart)
-    const products = cart.products
-    const product = products.find((e) => e.product._id === id)
+const getQuantity = async (id) => {
+    const data = await getCartId()
+    const cart = data.carrito
+    const product = cart.products.find((e) => e.product._id === id)
     return product.quantity
 }
-
-const deleteProductLS = (id) => {
-    const cart = JSON.parse(localStorage.cart)
-    const products = cart.products
-    const product = products.findIndex((e) => e.product._id === id)
-
-    products.splice(product, 1)
-
-    localStorage.setItem("cart", JSON.stringify(cart))
-}
-
 
 btnIncrease.forEach(btn => {
 
@@ -69,7 +55,7 @@ btnIncrease.forEach(btn => {
 
         const cartId = cartIdElem.getAttribute("cartId")
         const productId = ul.dataset.id
-        const quantity = getQuantity(productId)
+        const quantity = await getQuantity(productId)
 
         await fetch(`/api/carts/${cartId}/products/${productId}`, {
 
@@ -81,8 +67,6 @@ btnIncrease.forEach(btn => {
 
         })
 
-
-        updateQuantity(productId, quantity + 1)
         updateQuantityDom(productId, quantity + 1)
         updateTotal()
 
@@ -108,7 +92,7 @@ btnDecrease.forEach(btn => {
 
         const cartId = cartIdElem.getAttribute("cartId")
         const productId = ul.dataset.id
-        const quantity = getQuantity(productId)
+        const quantity = await getQuantity(productId)
 
         if (Number(quantity) > 1) {
             await fetch(`/api/carts/${cartId}/products/${productId}`, {
@@ -121,7 +105,6 @@ btnDecrease.forEach(btn => {
 
             })
 
-            updateQuantity(productId, quantity - 1)
             updateQuantityDom(productId, quantity - 1)
             updateTotal()
 
@@ -188,7 +171,6 @@ btnDelete.forEach(btn => {
                     }
                 })
 
-                deleteProductLS(productId)
                 ul.remove()
                 updateTotal()
 

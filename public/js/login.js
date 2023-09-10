@@ -13,34 +13,33 @@ const signup = async (firstName, lastName, age, email, password) => {
     })
 
     if (response.ok) {
+        console.log(await response.json());
         return true
     } else {
-        const error = await response.json()
-        return error.message
+        const data = await response.json()
+        console.log(data.error.message);
+        return data.error.message
     }
 }
 
 const login = async (email, password) => {
-    try {
-        const response = await fetch(`/api/sessions/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
 
-        if (response.ok) {
-            return true
-        } else {
-            const error = await response.json()
-            return error.message
-        }
-    }
-    catch (error) {
-        console.log(error);
-    }
+    const response = await fetch(`/api/sessions/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password }),
+    })
 
+    if (response.ok) {
+        console.log(await response.json());
+        return true
+    } else {
+        const data = await response.json()
+        console.log(data.error.message);
+        return data.error.message
+    }
 }
 
 const forgot = async (email, newPassword) => {
@@ -57,8 +56,9 @@ const forgot = async (email, newPassword) => {
             console.log(await response.json());
             return true
         } else {
-            const error = await response.json()
-            return error.message
+            const data = await response.json()
+            console.log(data.error.message);
+            return data.error.message
         }
 
     }
@@ -171,7 +171,7 @@ if (btnSignup) {
         if (newPassword === newPasswordTwo) {
 
             const result = await forgot(email, newPassword)
-            console.log(result);
+
             if (result === true) {
                 Toastify({
                     text: `Contraseña Actualizada`,

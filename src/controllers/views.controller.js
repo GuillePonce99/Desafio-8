@@ -1,16 +1,11 @@
-import { ProductManager } from "../dao/fileSystem/ProductManager.js"
 import { productsController } from "./product.controller.js"
 import { cartsController } from "./carts.controller.js"
-
-
-const miProducto = new ProductManager("productos.json")
-
 
 export class viewsController {
 
     static home = async (req, res) => {
-        const productos = await miProducto.getProducts()
-        res.render("home", { productos, style: "styles.css", title: "PRODUCTOS" })
+
+        res.render("home", { style: "styles.css", title: "PRODUCTOS" })
     }
 
     static chat = async (req, res) => {

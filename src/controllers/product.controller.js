@@ -1,93 +1,4 @@
-//import ProductManager from "../manager/ProductManager.js";
 import ProductModel from "../dao/models/products.model.js";
-
-/*
-let miProducto = new ProductManager.ProductManager("productos.json")
-
-//CONTROLLERS FS
-
-export const getProducts = async (req, res) => {
-    const productos = await miProducto.getProducts()
-    const { limit } = req.query
-    const response = await productos.slice(0, limit)
-    try {
-        if (limit) {
-            res.json(response)
-        } else {
-            res.json(productos)
-        }
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-
-
-export const getProduct = async (req, res) => {
-    const { pid } = req.params
-
-    try {
-        res.send(await miProducto.getProductsById(Number(pid)))
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-
-export const addProduct = async (req, res) => {
-    const { id, title, description, code, price, status, stock, category, thumbnails } = req.body;
-
-    if (!title || !description || !code || !price || !stock || !category) {
-        return res.status(401).json({ message: "Faltan datos" });
-    }
-    if (!thumbnails) {
-        req.body.thumbnail = "";
-    }
-    if (status === undefined) {
-        req.body.status = true
-    }
-    if (id) {
-        return res.status(401).json({ message: "No incluir ID" });
-    }
-
-    req.body.code = req.body.code.toString()
-    try {
-        await miProducto.addProduct(req.body)
-        res.json({ status: 200, mensaje: "PRODUCTO CARGADO EXITOSAMENTE", data: req.body })
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-
-export const updateProduct = async (req, res) => {
-    const { pid } = req.params
-    if (req.body.code) {
-        req.body.code = req.body.code.toString()
-    }
-
-    try {
-        await miProducto.updateProduct(Number(pid), req.body),
-            res.json({ status: 200, mensaje: "PRODUCTO ACTUALIZADO CORRECTAMENTE", data: req.body })
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-
-export const deleteProduct = async (req, res) => {
-    const { pid } = req.params
-
-    try {
-        await miProducto.deleteProduct(Number(pid)),
-            res.json({ status: 200, mensaje: "PRODUCTO ELIMINADO" })
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-*/
-//CONTROLLERS DB
 
 export class productsController {
     static getProducts = async (req, res) => {
@@ -277,15 +188,16 @@ export class productsController {
 
             let queryFormated = query ? req.query.query.replace(/ /g, "%20") : ""
 
-            const user = await req.session.user
+            const user = await req.user
+            let isAdmin = false
 
-            if (user) {
-                user.counter++
+            if (user.role === "admin") {
+                isAdmin = true
             }
 
             let response = {
                 status,
-                payload: { product, user },
+                payload: { product, user, isAdmin },
                 totalPages: result.totalPages,
                 prevPage: result.prevPage,
                 nextPage: result.nextPage,

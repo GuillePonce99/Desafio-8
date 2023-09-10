@@ -5,7 +5,7 @@
                 <h2>PERFIL</h2>
             </div>
 
-            {{#if data.payload.user.isAdmin}}
+            {{#if data.payload.isAdmin}}
             <ul class="ul-profile-2">
                 <li class="li-titles">Rol</li>
                 <li class="li-titles">Email</li>
@@ -23,16 +23,14 @@
         </div>
 
         <div id="form-user">
-            {{#if data.payload.user.isAdmin}}
-            <ul class="ul-profile-2" id="ul-profile" data-welcome={{data.payload.user.role}}
-                data-counter={{data.payload.user.counter}}>
+            {{#if data.payload.isAdmin}}
+            <ul class="ul-profile-2" id="ul-profile" data-welcome={{data.payload.user.role}}>
                 <li class="profile-role">"{{data.payload.user.role}}"</li>
                 <li><strong>{{data.payload.user.email}}</strong></li>
                 <button class="btn-logout" id="btn-logout">SALIR</button>
             </ul>
             {{else}}
-            <ul class="ul-profile" id="ul-profile" data-welcome={{data.payload.user.firstName}}
-                data-counter={{data.payload.user.counter}}>
+            <ul class="ul-profile" id="ul-profile" data-welcome={{data.payload.user.firstName}}>
                 <li class="profile-role">"{{data.payload.user.role}}"</li>
                 <li>{{data.payload.user.firstName}}</li>
                 <li>{{data.payload.user.lastName}}</li>

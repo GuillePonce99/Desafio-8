@@ -1,65 +1,18 @@
-//import CartManager from "../manager/CartManager.js"
 import ProductModel from "../dao/models/products.model.js"
 import CartsModel from "../dao/models/carts.model.js"
-
-
-
-// CONTROLLER FS
-
-/*
-let miCarrito = new CartManager.CartManager("./carrito.json")
-
-export const addCart = async (req, res) => {
-
-    try {
-        await miCarrito.addCart()
-        res.json({ status: 200, mensaje: "CARRITO CREADO" })
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-
-export const getCart = async (req, res) => {
-    const { cid } = req.params
-    try {
-        let carrito = await miCarrito.getCartsById(Number(cid))
-
-        res.json({ status: 200, mensaje: `CARRITO N° ${cid}`, data: carrito.products })
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-
-export const addProductToCart = async (req, res) => {
-    const { cid, pid } = req.params
-
-    try {
-        await miCarrito.addProductToCart(Number(cid), Number(pid))
-        let carrito = await miCarrito.getCartsById(Number(cid))
-        res.json({ status: 200, mensaje: `Producto ID: ${pid} agregado al carrito n° ${cid}`, data: carrito.products })
-    }
-    catch (err) {
-        res.status(err.statusCode).send(` ${err}`);
-    }
-}
-*/
-
-//CONTROLLER DB
+import UserModel from "../dao/models/users.model.js"
+import jwt from "jsonwebtoken"
+import { PRIVATE_KEY } from "../utils.js"
 
 export class cartsController {
     static getCarts = async (req, res) => {
         try {
             let carrito = await CartsModel.find()
 
-            res.status(200).json({ mensaje: `TODOS LOS CARRITOS`, carritos: carrito })
+            res.status(200).json({ message: `TODOS LOS CARRITOS`, carritos: carrito })
         }
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
 
     }
@@ -70,17 +23,14 @@ export class cartsController {
             const carrito = await CartsModel.findById(cid)
 
             if (carrito === null) {
-                res.status(404).json({ mensaje: `Not Found` })
+                res.status(404).json({ message: `Not Found` })
             } else {
-                res.status(200).json({ mensaje: `CARRITO N° ${cid}`, products: carrito.products })
+                res.status(200).json({ message: `CARRITO N° ${cid}`, products: carrito.products })
             }
         }
 
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
 
     }
@@ -90,13 +40,19 @@ export class cartsController {
             const cart = new CartsModel()
             await cart.save()
 
-            res.status(200).json({ mensaje: `CARRITO CREADO ID: ${cart._id}`, id: cart._id })
+            const token = req.cookies["coderCookieToken"];
+            const userToken = jwt.verify(token, PRIVATE_KEY)
+            const user = await UserModel.findOne({ "email": userToken.email })
+
+            user.cart = cart._id
+
+            user.save()
+
+            res.status(200).json({ message: `CARRITO CREADO ID: ${cart._id}`, id: cart._id })
+
         }
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
     }
     static addProductToCart = async (req, res) => {
@@ -126,18 +82,11 @@ export class cartsController {
 
             const actualizado = await CartsModel.findById(cid)
 
-            res.status(200).json({ mensaje: `Carrito actualizado`, data: actualizado })
-
-
+            res.status(200).json({ message: `Carrito actualizado`, data: actualizado })
 
         }
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
-            console.log(error);
-
+            res.sendServerError(error)
         }
     }
     static deleteCart = async (req, res) => {
@@ -147,17 +96,14 @@ export class cartsController {
             const eliminado = await CartsModel.deleteOne({ _id: cid })
 
             if (eliminado.deletedCount) {
-                res.status(200).json({ mensaje: `CARRITO N° ${cid} ELIMINADO` })
+                res.status(200).json({ message: `CARRITO N° ${cid} ELIMINADO` })
             } else {
-                res.status(404).json({ mensaje: `Not Found` })
+                res.status(404).json({ message: `Not Found` })
             }
         }
 
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
 
     }
@@ -169,16 +115,13 @@ export class cartsController {
 
             carrito.matchedCount === 0
                 ?
-                res.status(404).json({ mensaje: `Not Found` })
+                res.status(404).json({ message: `Not Found` })
                 :
-                res.status(200).json({ mensaje: `CARRITO N° ${cid} VACIO` })
+                res.status(200).json({ message: `CARRITO N° ${cid} VACIO` })
         }
 
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
 
     }
@@ -192,7 +135,6 @@ export class cartsController {
             if (carrito === null) {
                 return res.status(404).json({ error: "Not Found" })
             }
-
             const productIndex = carrito.products.findIndex((e) => e.product._id.equals(pid))
 
             if (productIndex === -1) {
@@ -203,15 +145,12 @@ export class cartsController {
 
             await CartsModel.updateOne({ _id: cid }, carrito, { new: true })
 
-            res.status(200).json({ mensaje: `PRODUCTO ID: ${pid} ELIMINADO DEL CARRITO` })
+            res.status(200).json({ message: `PRODUCTO ID: ${pid} ELIMINADO DEL CARRITO` })
 
         }
 
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
 
     }
@@ -238,14 +177,11 @@ export class cartsController {
             const actualizado = await CartsModel.updateOne({ _id: cid }, carrito)
 
 
-            res.status(200).json({ mensaje: `CANTIDAD ACTUALIZADA : ${quantity}`, data: actualizado })
+            res.status(200).json({ message: `CANTIDAD ACTUALIZADA : ${quantity}`, data: actualizado })
         }
 
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
 
     }
@@ -291,11 +227,35 @@ export class cartsController {
 
         }
         catch (error) {
-            res.status(500).json({
-                message: "error",
-                error: error
-            })
+            res.sendServerError(error)
         }
+    }
+
+    static getUserCart = async (req, res) => {
+
+        try {
+
+            const token = req.cookies["coderCookieToken"];
+            const userToken = jwt.verify(token, PRIVATE_KEY)
+            const user = await UserModel.findOne({ "email": userToken.email })
+
+            if (!user.cart) {
+                res.status(404).json({ message: `Not Found` })
+            } else {
+                const carrito = await CartsModel.findOne({ "_id": user.cart._id })
+
+                if (carrito === null) {
+                    res.status(404).json({ message: `Not Found` })
+                } else {
+                    res.status(200).json({ cartId: carrito._id, carrito })
+                }
+            }
+        }
+
+        catch (error) {
+            res.sendServerError(error)
+        }
+
     }
 
 }
